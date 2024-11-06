@@ -27,4 +27,17 @@ public class SystemCanstants {
      * 分类表的分类状态是正常状态
      */
     public static final String STATUS_NORMAL = "0";
+    /**
+     * 友链状态是审核通过
+     */
+    public static final String LINK_STATUS_NORMAL = "0";
+
+    /**
+     * 友链状态是审核未通过
+     */
+    public static final String LINK_STATUS_NOT_NORMAL = "1";
+    /**
+     * 友链状态是未审核
+     */
+    public static final String LINK_STATUS_NOT_CHECK = "2";
 }

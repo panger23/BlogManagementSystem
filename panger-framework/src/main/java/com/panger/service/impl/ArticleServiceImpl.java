@@ -3,22 +3,19 @@ package com.panger.service.impl;
 import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
-import com.fasterxml.jackson.databind.util.BeanUtil;
 import com.panger.domain.ResponseResult;
 import com.panger.domain.entity.Article;
-import com.panger.domain.entity.Category;
 import com.panger.domain.vo.ArticleListVo;
+import com.panger.domain.vo.ArticleDetailVo;
 import com.panger.domain.vo.HotArtivleVo;
 import com.panger.domain.vo.PageVo;
 import com.panger.mapper.ArticleMapper;
 import com.panger.service.ArticleService;
 import com.panger.service.CategoryService;
 import com.panger.utils.BeanCopyUtils;
-import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
 import java.util.stream.Collectors;
@@ -90,5 +87,18 @@ public class ArticleServiceImpl extends ServiceImpl<ArticleMapper, Article> impl
 
         PageVo pageVo = new PageVo(articleListVos, page.getTotal());
         return ResponseResult.okResult(pageVo);
+    }
+
+    @Override
+    public ResponseResult GetArticleById(Long id) {
+        // 根据ID查询文章
+        Article article = getById(id);
+        // 查询文章名称(前提是文章所在的分类存在，才能查询到分类名称)
+        if(categoryService.getById(article.getCategoryId()) != null) {
+            article.setCategoryName(categoryService.getById(article.getCategoryId()).getName());
+        }
+        // 转换为VO
+        ArticleDetailVo articleDetailVo = BeanCopyUtils.copyBean(article, ArticleDetailVo.class);
+        return ResponseResult.okResult(articleDetailVo);
     }
 }

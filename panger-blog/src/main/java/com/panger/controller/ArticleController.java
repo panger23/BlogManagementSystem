@@ -7,6 +7,7 @@ import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
@@ -40,6 +41,9 @@ public class ArticleController {
     public ResponseResult articleList(Integer pageNum, Integer pageSize, Long categoryId){
         return articleService.articleList(pageNum,pageSize,categoryId);
     }
-
-
+    @GetMapping("/{id}")
+    @ApiOperation("查询文章细节")
+    public ResponseResult GetArticleById(@PathVariable("id") Long id){
+        return articleService.GetArticleById(id);
+    }
 }
