@@ -34,11 +34,11 @@
             <artifactId>spring-boot-starter-test</artifactId>
             <scope>test</scope>
         </dependency>
-        <!--SpringSecurity启动器-->
-        <!--<dependency>
+        <!--SpringSecurity启动器- 需要用到登录功能就解开，不然就注释掉-->
+        <dependency>
             <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-starter-security</artifactId>
-        </dependency>-->
+        </dependency>
         <!--redis依赖-->
         <dependency>
             <groupId>org.springframework.boot</groupId>
@@ -91,6 +91,5 @@
         </dependency>
 
     </dependencies>
-
 
 </project>

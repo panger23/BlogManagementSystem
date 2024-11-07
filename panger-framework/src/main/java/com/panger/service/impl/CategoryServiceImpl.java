@@ -41,17 +41,20 @@ public class CategoryServiceImpl extends ServiceImpl<CategoryMapper, Category> i
         //查询文章列表，条件就是上一行的articleWrapper
         List<Article> articleList = articleService.list(articleWrapper);
         //获取文章的分类id，并且去重。使用stream流来处理上一行得到的文章表集合
+//        Set<Long> categoryIds = articleList.stream()
+//                //下面那行可以优化为Lambda表达式+方法引用
+//                .map(new Function<Article, Long>() {
+//                    @Override
+//                    public Long apply(Article article) {
+//                        return article.getCategoryId();
+//                    }
+//                })
+//                //把文章的分类id转换成Set集合
+//                .collect(Collectors.toSet());
         Set<Long> categoryIds = articleList.stream()
-                //下面那行可以优化为Lambda表达式+方法引用
-                .map(new Function<Article, Long>() {
-                    @Override
-                    public Long apply(Article article) {
-                        return article.getCategoryId();
-                    }
-                })
-                //把文章的分类id转换成Set集合
+                // map对元素进行加工而已
+                .map(Article::getCategoryId) // 使用方法引用直接获取分类 ID
                 .collect(Collectors.toSet());
-
         //查询分类表
         List<Category> categories = listByIds(categoryIds);
         //注意SystemCanstants是我们写的一个常量类，用来解决字面值的书写问题
